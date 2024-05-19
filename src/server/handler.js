@@ -21,7 +21,7 @@ async function postPredictHandler(request, h) {
 
     const response = h.response({
         status: 'success',
-        message: 'Model is predicted successfully.', data
+        message: 'Model is predicted successfully', data
       })
       response.code(201);
       return response;

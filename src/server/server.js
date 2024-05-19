@@ -13,11 +13,7 @@ const InputError = require('../exceptions/InputError');
             cors: {
               origin: ['*'],
             },
-            // payload: {
-            //     maxBytes: 1000000, 
-            //     parse: true,
-            //     output: 'stream' 
-            // }
+
         },
     })
 
@@ -30,15 +26,6 @@ const InputError = require('../exceptions/InputError');
     server.ext('onPreResponse', function (request, h) {
         const response = request.response;
         
-        // if (response instanceof InputError) {
-        //     const newResponse = h.response({
-        //         status: 'fail',
-        //         message: `${response.message} Silakan gunakan foto lain.`
-        //     })
-        //     newResponse.code(response.statusCode)
-        //     return newResponse;
-        // }
-
         if (response.isBoom) {
             const statusCode = Number.isInteger(response.output.statusCode) ? response.output.statusCode : 500;
             const newResponse = h.response({

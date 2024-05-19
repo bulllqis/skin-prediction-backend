@@ -14,7 +14,7 @@ async function predictClassification(model, image) {
 
         const score = await prediction.data();
         
-        const classes = ['Non-Cancer', 'Cancer'];
+        const classes = ['Non-cancer', 'Cancer'];
 
         const classResult = score[0] > 0.5 ? 1 : 0; 
         const label = classes[classResult];
