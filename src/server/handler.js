@@ -1,6 +1,9 @@
 const predictClassification = require('../services/inferenceService');
 const crypto = require('crypto');
 const storeData = require('../services/storeData');
+const { Firestore } = require('@google-cloud/firestore');
+
+const firestore = new Firestore();
 
 async function postPredictHandler(request, h) {
     const { image } = request.payload;
@@ -27,4 +30,24 @@ async function postPredictHandler(request, h) {
       return response;
 
 }
-module.exports = postPredictHandler;
+
+async function getPredictionHistories(request, h) {
+    try {
+        const snapshot = await firestore.collection('predictions').get();
+        const histories = snapshot.docs.map(doc => ({
+            id: doc.id,
+            history: doc.data()
+        }));
+
+        return h.response({
+            status: 'success',
+            data: histories
+        }).code(200);
+    } catch (error) {
+        return h.response({
+            status: 'fail',
+            message: 'Failed to retrieve prediction histories'
+        }).code(500);
+    }
+}
+module.exports = { postPredictHandler, getPredictionHistories };
