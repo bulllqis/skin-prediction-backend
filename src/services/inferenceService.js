@@ -21,8 +21,8 @@ async function predictClassification(model, image) {
 
         
         const suggestions = {
-            'Cancer': 'Segera periksa ke dokter.',
-            'Non-cancer': 'Senantiasa jaga kesehatan kulit Anda.'
+            'Cancer': 'Segera periksa ke dokter!',
+            'Non-cancer': 'Anda sehat!'
         };
 
         
