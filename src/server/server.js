@@ -25,7 +25,16 @@ const InputError = require('../exceptions/InputError');
     
     server.ext('onPreResponse', function (request, h) {
         const response = request.response;
-        
+
+        if (response instanceof InputError) {
+            const newResponse = h.response({
+                status: 'fail',
+                message: `${response.message}`
+            })
+            newResponse.code(response.statusCode)
+            return newResponse;
+        }
+
         if (response.isBoom) {
             const statusCode = Number.isInteger(response.output.statusCode) ? response.output.statusCode : 500;
             const newResponse = h.response({
